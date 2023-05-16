@@ -1,0 +1,98 @@
+openapi: 3.0.0
+x-stoplight:
+  id: sgq3a2f72svqd
+info:
+  title: vocatoin_api
+  version: '1.0'
+  description: api for vocation-api-calculator
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /calculate:
+    get:
+      summary: Вернуть сумму отпускных
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example 1:
+                  value:
+                    amountOfVocationPay: 5000
+      operationId: get-calculate
+      description: Вернуть сумму отпускных
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vacation'
+            examples:
+              Example 1:
+                value:
+                  averageSalary: 100000
+                  vacationDays: 5
+                  startVacation: '2023-05-15'
+                  endVacation: '2023-05-22'
+components:
+  schemas:
+    Response:
+      title: VacationPayResponse
+      x-stoplight:
+        id: f7294a059ca71
+      type: object
+      description: ответ на запрос /calculate
+      x-examples:
+        Example 1:
+          amountOfVocationPay: 5000
+      properties:
+        amountOfVocationPay:
+          type: number
+          format: double
+          minimum: 1
+          maximum: 1000000
+          example: 5000
+          description: сумма отпускных
+    Vacation:
+      title: Vacation
+      x-stoplight:
+        id: x6nuqnwyumkvl
+      type: object
+      x-examples:
+        Example 1:
+          averageSalary: 100000
+          vacationDays: 5
+          startVacation: '2023-05-15'
+          endVacation: '2023-05-22'
+      description: данные по отпуску
+      properties:
+        averageSalary:
+          type: number
+          format: double
+          example: 100000
+          minimum: 1
+          maximum: 1000000
+          description: средняя зарплата
+        vacationDays:
+          type: integer
+          example: 5
+          minimum: 1
+          maximum: 100
+          description: количество дней отпуска
+        startVacation:
+          type: string
+          format: date
+          example: '2023-05-15'
+          minLength: 1
+          maxLength: 30
+          description: дата начала отпуска
+        endVacation:
+          type: string
+          format: date
+          example: '2023-05-22'
+          minLength: 1
+          maxLength: 30
+          description: дата окончания отпуска
